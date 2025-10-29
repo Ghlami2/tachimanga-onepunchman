@@ -1,0 +1,35 @@
+name: Update OnePunchMan JSON
+
+on:
+  schedule:
+    - cron: "0 6 * * *"  # tous les jours à 6h du matin (heure France)
+  workflow_dispatch:     # permet de lancer manuellement si besoin
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: Run scraper
+        run: |
+          python scraper.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "github-actions"
+          git add data/onepunchman.json
+          git commit -m "update json" || echo "No changes"
+          git push
