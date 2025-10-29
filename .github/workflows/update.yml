@@ -2,8 +2,8 @@ name: Update OnePunchMan JSON
 
 on:
   schedule:
-    - cron: "0 6 * * *"  # tous les jours à 6h du matin (heure France)
-  workflow_dispatch:     # permet de lancer manuellement si besoin
+    - cron: "0 6 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
